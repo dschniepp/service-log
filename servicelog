@@ -1,0 +1,14 @@
+#!/bin/sh
+
+while [[ 1 ]]; do
+	i=0
+	echo "Job\tCPU %\tRAM %"
+	for service in `cat service_list`
+	do
+		#while true; do ps o pcpu,rsz -p $pid | tail -n1 >> usage.log; sleep $interval; done
+		#ps -o command,%cpu,%mem -p 4315 pidfof
+		ps aux | grep $service | awk -v service=$service '{print service "\t" $3 "\t" $4}'
+		i=$((i+1))
+	done
+	sleep 1
+done

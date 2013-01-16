@@ -1,9 +1,10 @@
 #!/bin/sh
 
-while [[ 1 ]]; do
+while :
+do
 	i=0
 	echo "Job\tCPU %\tRAM %"
-	for service in `cat service_list`
+	for service in `cat /home/daniel/service-log/service_list`
 	do
 		#while true; do ps o pcpu,rsz -p $pid | tail -n1 >> usage.log; sleep $interval; done
 		#ps -o command,%cpu,%mem -p 4315 pidfof

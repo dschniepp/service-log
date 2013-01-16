@@ -11,9 +11,10 @@ class ServiceLog(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/start':
-            call("start-stop-daemon --exec servicelog.sh --background --start", shell=True)
+            call("start-stop-daemon --start --oknodo --user daniel --name servicelog -v --make-pidfile --pidfile /home/daniel/service-log.pid --exec /home/daniel/service-log/servicelog -- --daemon &", shell=True)
+	    
         if self.path == '/stop':
-            call("start-stop-daemon --exec servicelog.sh --background --stop", shell=True)
+            call("start-stop-daemon --stop --oknodo --pidfile /home/daniel/service-log.pid &", shell=True)
 
 def main():
     try:
@@ -36,7 +37,7 @@ def main():
         else:
             print 'ServiceLog Service v 0.1 started in daemon mode'
              
-        server = HTTPServer(('', 8080), ServiceLog)
+        server = HTTPServer(('', 8001), ServiceLog)
         server.serve_forever()
     except (KeyboardInterrupt, SystemExit) as e:
         if(e): # wtf, why is this creating a new line?

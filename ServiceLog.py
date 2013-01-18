@@ -3,6 +3,7 @@
 import urlparse, sys, os,urlparse
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from subprocess import call
+from os import curdir, sep
 
 class ServiceLog(BaseHTTPRequestHandler):
 
@@ -11,10 +12,17 @@ class ServiceLog(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/start':
-            call("start-stop-daemon --start --oknodo --user daniel --name servicelog -v --make-pidfile --pidfile /home/daniel/service-log.pid --exec /home/daniel/service-log/servicelog -- --daemon &", shell=True)
-	    
+            call("start-stop-daemon --start --oknodo --user daniel --name servicelog -v --make-pidfile --pidfile /home/daniel/service-log/service-log.pid --exec /home/daniel/service-log/servicelog &", shell=True)
+
         if self.path == '/stop':
-            call("start-stop-daemon --stop --oknodo --pidfile /home/daniel/service-log.pid &", shell=True)
+            call("start-stop-daemon --stop --oknodo --pidfile /home/daniel/service-log/service-log.pid", shell=True)
+            f = open("/home/daniel/service-log/log.csv")
+            self.send_response(200)
+            self.send_header('Content-type',    'text/text')
+            self.end_headers()
+            self.wfile.write(f.read())
+            f.close()
+
 
 def main():
     try:

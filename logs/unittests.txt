@@ -1,0 +1,11 @@
+Fr 18. Jan 15:16:19 CET 2013
+PHPUnit 3.7.10 by Sebastian Bergmann.
+
+Configuration read from /home/daniel/laravel/phpunit.xml
+
+.
+
+Time: 0 seconds, Memory: 6.50Mb
+
+[30;42m[2KOK (1 test, 1 assertion)
+[0m[2K

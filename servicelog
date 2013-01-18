@@ -1,14 +1,22 @@
 #!/bin/sh
 
+#Config to absolute path then you have no problem with path issues
+
+service_list_file="/home/daniel/service-log/service_list"
+
+file="/home/daniel/service-log/log.csv"
+
+echo "Job;CPU %;RAM %\n" > $file
+
 while :
 do
+	echo ";;\n">> $file
 	i=0
-	echo "Job\tCPU %\tRAM %"
-	for service in `cat /home/daniel/service-log/service_list`
+	for service in `cat $service_list_file`
 	do
 		#while true; do ps o pcpu,rsz -p $pid | tail -n1 >> usage.log; sleep $interval; done
 		#ps -o command,%cpu,%mem -p 4315 pidfof
-		ps aux | grep $service | awk -v service=$service '{print service "\t" $3 "\t" $4}'
+		ps aux | grep $service | awk -v service=$service '{print service ";" $3 ";" $4 "\n"}' >> $file
 		i=$((i+1))
 	done
 	sleep 1

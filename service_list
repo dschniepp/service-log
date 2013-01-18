@@ -1,2 +1,4 @@
-apache
+nginx
+php
 mysql
+redis
